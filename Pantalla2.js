@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TouchableWithoutF
 import React, { useContext, useState, useEffect } from 'react';
 import PantallasContext from './PantallasContext';
 
+
 export default function Pantalla2({ navigation }) {
   const { text, setText } = useContext(PantallasContext);
   const { name, setName } = useContext(PantallasContext);
@@ -10,7 +11,7 @@ export default function Pantalla2({ navigation }) {
   const { location, setLocation } = useContext(PantallasContext);
   const { score, setScore } = useContext(PantallasContext);
 
-
+  // Constante utilizada para abir el navegador cuando pulsemos el e-mail.
   const handleEmailPress = () => {
     const url = `mailto:${email}`;
     Linking.openURL(url);
@@ -24,7 +25,6 @@ export default function Pantalla2({ navigation }) {
 
   // Función utilizada para mostrar todas las skills de un usuario en particular.
   let leerScore = async () => {
-    // Le damos 3 milisegundos para que a la base de datos le de tiempo a responder.
 
     try {
       // Introducimos la url con el nickname recibido de la pantalla1.
@@ -80,7 +80,6 @@ export default function Pantalla2({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-
   },
   container_sup: {
     flexDirection: 'row',

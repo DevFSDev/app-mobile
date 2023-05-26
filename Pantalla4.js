@@ -15,7 +15,6 @@ export default function Pantalla4({ navigation }) {
     const { text, setText } = useContext(PantallasContext);
     const { error, setError } = useContext(PantallasContext);
     const { score, setScore } = useContext(PantallasContext);
-    const {skillLevel, setSkillLevel} = useContext(PantallasContext);
 
 
     // Constante para hacer visible el modal.
@@ -42,7 +41,6 @@ export default function Pantalla4({ navigation }) {
 
     // Función utilizada para leer todas las skills disponibles.
     let leerBDD = async () => {
-        console.log("test")
         try {
             const response = await fetch("http://192.168.55.50:9000/skill/listall", {
                 method: "GET"
@@ -94,17 +92,17 @@ export default function Pantalla4({ navigation }) {
                 const data = await response.json();
                 setError("ok");
 
-                // Mostramos el mensaje 3 segundos para la pantalla 2.
+                // Mensaje de éxtio se muestra 3 segundos.
                 setTimeout(() => {
                     setError("");
                 }, 3000);
-                // En caso de que arroje un error lo mostramos.    
+
             } else {
                 const responseData = await response.json();
                 const errorMessage = responseData.message || response.statusText;
                 setError(errorMessage);
 
-                // Mostramos el mensaje 3 segundos para la pantalla 2.
+                // Mensaje de error se muestra 3 segundos.  
                 setTimeout(() => {
                     setError("");
                 }, 3000);
@@ -122,7 +120,6 @@ export default function Pantalla4({ navigation }) {
 
     // Función utilizada para mostrar todas las skills de un usuario en particular.
     let leerScore = async () => {
-        // Le damos 3 milisegundos para que a la base de datos le de tiempo a responder.
 
         try {
             // Introducimos la url con el nickname recibido de la pantalla1.
@@ -220,16 +217,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1
     },
-    boxes: {
-        marginBottom: 10,
-        borderColor: "black",
-        borderWidth: 2,
-        backgroundColor: "#FA8072",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 10,
-        borderRadius: 10,
-    },
     names: {
         fontWeight: '700',
         fontSize: 30,
@@ -242,27 +229,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "black"
     },
-    values: {
-        fontWeight: '700',
-        fontSize: 20,
-    },
-    encabezado: {
-        fontSize: 25,
-        fontWeight: '700',
-        marginBottom: 10,
-        marginTop: 10,
-    },
     nickname: {
         fontSize: 20,
         fontWeight: '700',
         marginBottom: 30,
         marginTop: 10,
     },
-    text_boxes: {
-        paddingVertical: 20,
-        fontWeight: 'bold'
-    },
-    button: {
-        marginLeft: 300,
-    }
 });

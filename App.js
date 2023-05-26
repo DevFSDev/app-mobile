@@ -1,4 +1,7 @@
 import { StyleSheet } from 'react-native';
+import Pantalla11 from './Pantalla11';
+import Pantalla10 from './Pantalla10';
+import Pantalla9 from './Pantalla9';
 import Pantalla8 from './Pantalla8';
 import Pantalla7 from './Pantalla7';
 import Pantalla6 from './Pantalla6';
@@ -29,6 +32,9 @@ export default function App() {
           <Stack.Screen name="Añadir varias habilidades" component={Pantalla6} />
           <Stack.Screen name="Proyectos" component={Pantalla7} />
           <Stack.Screen name="Detalle proyectos" component={Pantalla8} />
+          <Stack.Screen name="Fechas" component={Pantalla9} />
+          <Stack.Screen name="Competencias" component={Pantalla10} />
+          <Stack.Screen name="Económico" component={Pantalla11} />
         </Stack.Navigator>
       </NavigationContainer>
     </PantallasProvider>

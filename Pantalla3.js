@@ -17,9 +17,6 @@ export default function Pantalla3({ navigation }) {
   const { surnames, setSurnames } = useContext(PantallasContext);
   const { error, setError } = useContext(PantallasContext);
   const { score, setScore } = useContext(PantallasContext);
-  const {skill, setSkill} = useContext(PantallasContext);
-  const {level, setLevel} = useContext(PantallasContext);
-
 
 
   // Constante que hace referencia a los colores del nivel de habilidad.
@@ -51,7 +48,6 @@ export default function Pantalla3({ navigation }) {
 
   // Función utilizada para mostrar todas las skills de un usuario en particular.
   let leerScore = async () => {
-    // Le damos 3 milisegundos para que a la base de datos le de tiempo a responder.
 
     try {
       // Introducimos la url con el nickname recibido de la pantalla1.
@@ -253,17 +249,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-
-  },
-  boxes: {
-    marginBottom: 10,
-    borderColor: "black",
-    borderWidth: 2,
-    backgroundColor: "#FA8072",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-    borderRadius: 10,
   },
   tituloModal: {
     fontSize: 25,
@@ -281,21 +266,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 20,
   },
-  encabezado: {
-    fontSize: 25,
-    fontWeight: '700',
-    marginBottom: 10,
-    marginTop: 10,
-  },
   nickname: {
     fontSize: 17,
     fontWeight: '700',
     marginBottom: 10,
     marginTop: 10,
-  },
-  text_boxes: {
-    paddingVertical: 20,
-    fontWeight: 'bold'
   },
   encabezadoError: {
     fontSize: 15,

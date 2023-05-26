@@ -110,10 +110,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 20,
   },
-  text_boxes: {
-    paddingVertical: 20,
-    fontWeight: 'bold'
-  },
   image: {
     width: 40,
     height: 40,

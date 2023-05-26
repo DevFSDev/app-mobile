@@ -40,6 +40,7 @@ export default function Pantalla4({ navigation }) {
         leerBDD();
     }, [employeeData]);
 
+    // Constante utilizada para saber a que grupo de colores va cada departamento.
     const departmentColorMap = {
         Desarrollo: 1,
         Sistemas: 2,
@@ -49,6 +50,7 @@ export default function Pantalla4({ navigation }) {
         Comunicación: 6,
     };
 
+    // Función utilizada para saber todas las skills que hay en la base de datos.
     const leerBDD = async () => {
         try {
             const response = await fetch("http://192.168.55.50:9000/skill/listall", {
@@ -106,6 +108,7 @@ export default function Pantalla4({ navigation }) {
         setArrayLevel((prevArrayLevel) => [...prevArrayLevel, { value: level }]);
     };
 
+    // Función para 
     const guardar = async () => {
         const url = `http://192.168.55.50:9000/user/skillArray?nickname=${text}`;
         enviarConsultaPost(url);
@@ -133,6 +136,7 @@ export default function Pantalla4({ navigation }) {
         }
     };
 
+    // Constante utilizada para devolver el color dependiendo de su nivel (departamento).
     const getColorForLevel = (level) => {
         const colorMap = {
             1: '#8C100C',
@@ -148,6 +152,7 @@ export default function Pantalla4({ navigation }) {
         return colorMap[level] || colorMap.default;
     };
 
+    // Función que recibe la skill, el nivel(departamento), cual de los niveles se ha pulsado y el color que se le asigna.
     const SkillButton = ({ skill, level, onPress, color }) => {
         return (
             <TouchableOpacity
@@ -275,47 +280,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1
     },
-    boxes: {
-        marginBottom: 10,
-        borderColor: "black",
-        borderWidth: 2,
-        backgroundColor: "#FA8072",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 10,
-        borderRadius: 10,
-    },
     names: {
         fontWeight: '700',
         fontSize: 25,
     },
-    tituloModal: {
-        fontSize: 25,
-        fontWeight: '700',
-        marginBottom: 10,
-        marginTop: 10,
-        textAlign: "center",
-        color: "black"
-    },
     values: {
         fontWeight: '700',
         fontSize: 20,
-    },
-    encabezado: {
-        fontSize: 25,
-        fontWeight: '700',
-        marginBottom: 10,
-        marginTop: 10,
     },
     nickname: {
         fontSize: 20,
         fontWeight: '700',
         marginBottom: 30,
         marginTop: 10,
-    },
-    text_boxes: {
-        paddingVertical: 20,
-        fontWeight: 'bold'
     },
     button: {
         marginLeft: 300,

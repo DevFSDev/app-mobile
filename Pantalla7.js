@@ -84,27 +84,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 20,
   },
-  text_boxes: {
-    paddingVertical: 20,
-    fontWeight: 'bold'
-  },
   image: {
     width: 40,
     height: 40,
     borderRadius: 40,
     marginRight: 16,
     marginLeft: 10,
-  },
-  marcador: {
-    position: 'absolute',
-    top: 20,
-    left: 40,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#32CD32',
-  },
-  imageContainer: {
-    position: 'relative',
   }
 });

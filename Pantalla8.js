@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { useContext } from 'react';
 import PantallasContext from './PantallasContext';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 export default function Pantalla8({ navigation }) {
   const { project, setProject } = useContext(PantallasContext);
   const [datesProject, setDatesproject] = useState([]);
   const [datesCapabilitys, setDatescapabilitys] = useState([]);
+  const { text, setText } = useContext(PantallasContext);
+  const { name, setName } = useContext(PantallasContext);
+  const { surnames, setSurnames } = useContext(PantallasContext);
+  const { email, setemail } = useContext(PantallasContext);
+  const { location, setLocation } = useContext(PantallasContext);
 
 
   useEffect(() => {
@@ -25,7 +34,7 @@ export default function Pantalla8({ navigation }) {
         const data = await response.json();
         let newData = [];
         const item = data.data;
-
+        console.log(item)
 
         newData.push({
           _id: item._id,
@@ -36,7 +45,14 @@ export default function Pantalla8({ navigation }) {
           datesStart: item.dates.start,
           datesEnd: item.dates.end,
           datesLiabilities: item.dates.liabilities,
-          economic: item.economic
+          economic: item.economic,
+          description: item.description,
+          nickname: item.nickname,
+          projectManagerName: item.projectManagerName,
+          projectManagerSurnames: item.projectManagerSurnames,
+          location: item.location,
+          email: item.email,
+
         });
         setDatesproject(newData)
       }
@@ -76,106 +92,111 @@ export default function Pantalla8({ navigation }) {
   };
 
 
+
   return (
-    <ScrollView style={{ width: 360 }}>
-      <Text style={styles.encabezado}>Proyecto: </Text>
-      <View>
-        {datesProject.length > 0 ? (
-          datesProject.map((item, index) => (
+    <View>
+
+      {datesProject.length > 0 ? (
+        datesProject.map((item, index) => (
+          <View>
             <View style={styles.boxes2} key={item._id}>
-              <View style={{ marginLeft: 20 }}>
-                <Text style={styles.text}>ID del proyecto: </Text>
-                <Text>{item._id}</Text>
-                <Text style={styles.text}>Nombre del proyecto: </Text>
-                <Text>{item.name}</Text>
-                <Text style={styles.text}>Nombre del cliente: </Text>
-                <Text>{item.client}</Text>
-                <Text style={styles.text}>Clave del proyecto: </Text>
-                <Text>{item.keyProject}</Text>
-                <Text style={styles.text}>Estado: </Text>
-                <Text>{item.status}</Text>
-                <Text style={{ marginTop: 10, fontWeight: 'bold', marginBottom: 10 }}>Fechas: </Text>
-                <Text>Fecha de inicio: {item.datesStart}</Text>
-                <Text>Fecha de fin: {item.datesEnd}</Text>
-                <Text>Fecha limite: {item.datesLiabilities}</Text>
-                <Text style={{ fontWeight: 'bold', marginTop: 10 }}>Económico:</Text>
-                {item.economic.map((economicItem, economicIndex) => (
-                  <View style={{ marginTop: 10 }} key={economicIndex}>
-                    <Text>Categoría: {economicItem.category}</Text>
-                    <Text>Concepto: {economicItem.amount}</Text>
+              <View style={{ flexDirection: 'column', flex: 0.30 }}>
+                <AntDesign name="API" size={46} color="black" style={{ textAlign: 'center' }} />
+                <Text style={{textAlign: 'center', flex: 1}}>{item.keyProject}</Text>
+              </View>
+              <View style={{ flex: 0.7 }}>
+                <View style={{ flexDirection: "column" }}>
+                  <Text style={styles.text2}>{item.name}</Text>
+                  <View style={{ flexDirection: 'row',alignItems: 'center' }}>
+                    <FontAwesome name="user" size={24} color="black" style={{ marginLeft: 40,margin: 10 }} />
+                    <Text style={styles.cliente}> {item.client}</Text>
                   </View>
-                ))}
+                </View>
               </View>
             </View>
-          ))
-        ) : (
-          <Text>No hay datos disponibles</Text>
-        )}
-      </View>
-      <View>
-      <Text style={styles.encabezado}>Competencias:</Text>
-        {datesCapabilitys.length > 0 ? (
-          datesCapabilitys.map((item, index) => (
-            <View style={styles.boxes} key={item._id}>
-              <View style={{ marginLeft: 20 }}>
-                <Text style={styles.text}>Nombre del proyecto: </Text>
-                <Text>{item.project}</Text>
-                <Text style={styles.text}>Nivel: </Text>
-                <Text>{item.level}</Text>
-                <Text style={styles.text}>Participación: </Text>
-                <Text>{item.part}</Text>
-                <Text style={styles.text}>Habilidad: </Text>
-                <Text>{item.skill}</Text>
-              </View>
-            </View>
-          ))
-        ) : (
-          <Text>No hay competencias disponibles</Text>
-        )}
-      </View>
-    </ScrollView>
+            {item.description != undefined ? <Text style={styles.description}>{item.description}</Text> : <Text style={styles.description}>No hay descripción disponible sobre el proyecto.</Text>}
+
+          </View>
+        ))
+      ) : (
+        <Text>No hay datos disponibles</Text>
+      )}
+
+      {datesProject.length > 0 ? (
+        datesProject.map((item, index) => (
+          <View style={{ borderBottomColor: "black", borderBottomWidth: 2, marginBottom: 10 }}>
+            <TouchableOpacity onPress={() => { setText(item.nickname); setName(item.projectManagerName); setSurnames(item.projectManagerSurnames); setLocation(item.location); setemail(item.email); navigation.navigate('Menú') }} style={{ flexDirection: "row" }}>
+              <FontAwesome5 style={{ margin: 10 }} name="user-tie" size={24} color="black" />
+              <Text style={{ margin: 12 }}>{item.projectManagerName} {item.projectManagerSurnames}</Text>
+            </TouchableOpacity>
+          </View>
+        ))
+      ) : (
+        <Text>No hay datos disponibles</Text>
+      )}
+      <TouchableOpacity onPress={() => { navigation.navigate('Fechas') }}>
+        <View style={styles.boxes}>
+          <Text style={styles.text}>Fechas</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => { navigation.navigate('Competencias') }}>
+        <View style={styles.boxes}>
+          <Text style={styles.text}>Competencias</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => { navigation.navigate('Económico') }}>
+        <View style={styles.boxes}>
+          <Text style={styles.text}>Económico</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   boxes: {
-    marginLeft: 10,
-    marginRight: 10,
+    margin: 5,
     paddingTop: 10,
     paddingBottom: 10,
-    marginBottom: 10,
     borderColor: "black",
     borderWidth: 2,
     backgroundColor: "#FFEBCD",
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   boxes2: {
-    marginLeft: 10,
-    marginRight: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginBottom: 10,
-    borderColor: "black",
-    borderWidth: 2,
-    backgroundColor: "#FFDEAD",
-    flexDirection: "row"
+    margin: 5,
+    marginTop: 20,
+    flexDirection: "row",
   },
   text: {
     fontWeight: "bold",
-    marginTop: 5,
+    fontSize: 14
+  },
+  cliente: {
+    fontSize: 16,
+    margin: 5,
+    textAlign: 'center',
+  },
+  text2: {
+    fontWeight: "bold",
+    fontSize: 22,
+    textAlign: 'center',
   },
   encabezado: {
     fontWeight: "bold",
     marginTop: 10,
     textAlign: "center",
-    fontSize: 20,
-    marginBottom: 10
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 12,
+    borderBottomColor: "black",
+    borderBottomWidth: 2,
+    margin: 10,
+    textAlign: 'justify',
+    paddingBottom: 10
   }
 
 });

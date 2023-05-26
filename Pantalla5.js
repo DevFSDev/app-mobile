@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 
-
 export default function Pantalla5({ navigation }) {
     const [indice, setIndice] = useState(0);
     const [skillsData, setSkillsData] = useState([]);
@@ -19,14 +18,14 @@ export default function Pantalla5({ navigation }) {
     const [team, setTeam] = useState("");
     const [departamento, setDepartamento] = useState("");
     const [skill, setSkill] = useState("");
-    const colors = ["#EF4641", "#00AA9B", "#91A0CC", "#4BACC6", "#F79646", "#8064A2", "#FFFFFF"];
-    const colors2 = ["#D21712", "#007F74", "#5A70B3", "#31859C", "#E46C0A", "#604A7B", "#FFFFFF"];
-    const colors3 = ["#8C100C", "#00554E", "#192137", "#215968", "#984807", "#403152", "#FFFFFF"];
     const [indice2, setIndice2] = useState([]);
     const [bool, setBool] = useState(false);
     const [candidadPersonas, setCandidadPersonas] = useState([]);
     const [cantidadTeam, setCantidadTeam] = useState([]);
     const [cantidadDepartment, setCantidadDepartment] = useState([]);
+    const [coloresDepartamentos, setColoresDepartamentos] = useState([]);
+    const [coloresTeams, setColoresTeams] = useState([]);
+    const [coloresSkills, setColoresSkills] = useState([]);
 
 
     const backgroundColorMap = {
@@ -39,8 +38,8 @@ export default function Pantalla5({ navigation }) {
     // Hook useEffect(), cada vez que se actualiza el campo de busqueda llamará a la función leerBDD().
     useEffect(() => {
         leerDepartament();
+        leerColores();
     }, []);
-
 
     useEffect(() => {
         leerTeams();
@@ -56,7 +55,33 @@ export default function Pantalla5({ navigation }) {
         }
     }, [skillsData]);
 
+    // Función utilizada para leer los colores que se encuentran en la base de datos de mongoDB.
+    let leerColores = async () => {
 
+        try {
+            const response = await fetch("http://192.168.55.50:9000/department/list", {
+                method: "GET"
+            });
+            if (response.ok) {
+                const data = await response.json();
+                let newData = [];
+                const item = data.data;
+                for (let i = 0; i < item.length; i++) {
+                    newData.push(item[i].color)
+                }
+                setColoresDepartamentos(newData) 
+                setColoresTeams(newData)
+                setColoresSkills(newData)
+
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    // Función utilizada para leer todos los departamentos de la base de datos.
     let leerDepartament = async () => {
         try {
             const response = await fetch("http://192.168.55.50:9000/department/list", {
@@ -78,6 +103,7 @@ export default function Pantalla5({ navigation }) {
         }
     };
 
+    // Función utilizada para leer los teams de un depertamento en concreto.
     let leerTeams = async () => {
         if (departamento != "") {
             try {
@@ -102,6 +128,7 @@ export default function Pantalla5({ navigation }) {
         };
     }
 
+    // Función utilizada para leer las skills de un departamento y un team específico.
     let leerSkills = async () => {
         if (team != "") {
             try {
@@ -128,6 +155,7 @@ export default function Pantalla5({ navigation }) {
         };
     }
 
+    // Función utilizada para leer todas aquellas personas que tengan esa skill concreta.
     let leerPersonas = async () => {
         if (skill != "") {
             try {
@@ -163,7 +191,7 @@ export default function Pantalla5({ navigation }) {
         }
     }
 
-
+    // Funcion utilizada para saber cuantas personas tienen cada una de las skills, necesita saber a que team hace referencia.
     let personasSkill = async () => {
         try {
             const response = await fetch("http://192.168.55.50:9000/user/skill/listQuantity?team=" + team, {
@@ -181,7 +209,7 @@ export default function Pantalla5({ navigation }) {
 
     }
 
-
+    // Función utilizada para saber cuantas personas estan en cada uno de los teams, necesita saber a que departamento hace referencia.
     let personasTeams = async () => {
         if (departamento != "") {
             try {
@@ -202,7 +230,7 @@ export default function Pantalla5({ navigation }) {
         };
     }
 
-
+    // Función utilizada para saber las personas que hay en cada departamento, necesita pasar a que departamentos hace referencia.
     let personasDepartamentos = async () => {
         try {
 
@@ -237,7 +265,7 @@ export default function Pantalla5({ navigation }) {
                             {departamento != "" ? (<Ionicons style={{ marginLeft: 5, borderRadius: 30 }} name="md-chevron-back-circle" size={32} color="black" />) : ""}
                         </TouchableOpacity>
                         <Text style={styles.name}>Departamento: </Text>
-                        <Text style={[styles.name, { color: colors[indice % colors.length] }]}>{departamento}</Text>
+                        <Text style={[styles.name, { color: coloresDepartamentos[indice] }]}>{departamento}</Text>
                     </View>
                 ) : skillsData.length > 0 ? (
                     <View>
@@ -246,14 +274,14 @@ export default function Pantalla5({ navigation }) {
                                 {departamento != "" ? (<Ionicons style={{ marginLeft: 5, borderRadius: 30 }} name="md-chevron-back-circle" size={32} color="black" />) : ""}
                             </TouchableOpacity>
                             <Text style={styles.name}>Departamento: </Text>
-                            <Text style={[styles.name, { color: colors[indice % colors.length] }]}>{departamento}</Text>
+                            <Text style={[styles.name, { color: coloresDepartamentos[indice] }]}>{departamento}</Text>
                         </View>
                         <View style={styles.departamento}>
                             <TouchableOpacity onPress={() => { setSkillsData([]), setDepartmentData([]), setBool(false), setPersonData([]), setTeamsData(teamsData2) }}>
                                 {team != "" ? <Ionicons style={{ marginLeft: 5 }} name="md-chevron-back-circle" size={32} color="black" /> : ""}
                             </TouchableOpacity>
                             <Text style={styles.name}>Equipo: </Text>
-                            <Text style={[styles.name, { color: colors2[indice % colors.length] }]}>{team}</Text>
+                            <Text style={[styles.name, { color: coloresTeams[indice] }]}>{team}</Text>
                         </View>
                     </View>
                 ) : personData.length > 0 || bool == true ? (
@@ -263,21 +291,21 @@ export default function Pantalla5({ navigation }) {
                                 {departamento != "" ? (<Ionicons style={{ marginLeft: 5, borderRadius: 30 }} name="md-chevron-back-circle" size={32} color="black" />) : ""}
                             </TouchableOpacity>
                             <Text style={styles.name}>Departamento: </Text>
-                            <Text style={[styles.name, { color: colors[indice % colors.length] }]}>{departamento}</Text>
+                            <Text style={[styles.name, { color: coloresDepartamentos[indice] }]}>{departamento}</Text>
                         </View>
                         <View style={styles.departamento}>
                             <TouchableOpacity onPress={() => { setSkillsData([]), setDepartmentData([]), setBool(false), setPersonData([]), setTeamsData(teamsData2) }}>
                                 {team != "" ? <Ionicons style={{ marginLeft: 5 }} name="md-chevron-back-circle" size={32} color="black" /> : ""}
                             </TouchableOpacity>
                             <Text style={styles.name}>Equipo: </Text>
-                            <Text style={[styles.name, { color: colors2[indice % colors.length] }]}>{team}</Text>
+                            <Text style={[styles.name, { color: coloresTeams[indice] }]}>{team}</Text>
                         </View>
                         <View style={styles.departamento}>
                             <TouchableOpacity onPress={() => { setTeamsData([]), setDepartmentData([]), setBool(false), setPersonData([]), setSkillsData(skillsData2) }}>
                                 {skill != "" ? (<Ionicons style={{ marginLeft: 5, borderRadius: 30 }} name="md-chevron-back-circle" size={32} color="black" />) : ""}
                             </TouchableOpacity>
                             <Text style={styles.name}>Habilidad: </Text>
-                            <Text style={[styles.name, { color: colors3[indice % colors.length] }]}>{skill}</Text>
+                            <Text style={[styles.name, { color: coloresSkills[indice] }]}>{skill}</Text>
                         </View>
                     </View>
                 ) : null
@@ -297,7 +325,7 @@ export default function Pantalla5({ navigation }) {
                                 <View
                                     style={[
                                         styles.boxes,
-                                        { backgroundColor: colors[index % colors2.length] },
+                                        { backgroundColor: coloresDepartamentos[index] },
                                     ]}>
                                     <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <View style={{
@@ -335,7 +363,7 @@ export default function Pantalla5({ navigation }) {
                                     <View
                                         style={[
                                             styles.boxes,
-                                            { backgroundColor: colors2[indice] },
+                                            { backgroundColor: coloresTeams[indice] },
                                         ]}>
                                         {item.team == 'CAU' ? (
                                             <Text
@@ -389,7 +417,7 @@ export default function Pantalla5({ navigation }) {
                                         <View
                                             style={[
                                                 styles.boxes,
-                                                { backgroundColor: colors3[indice] },
+                                                { backgroundColor: coloresSkills[indice] },
                                             ]}>
                                             {item.team == 'CAU' ? (
                                                 <Text
@@ -498,11 +526,6 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         paddingTop: 7
     },
-    menuInf: {
-        flexDirection: "row",
-        justifyContent: 'center',
-
-    },
     names: {
         fontWeight: '700',
         fontSize: 20,
@@ -531,8 +554,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 2,
         borderBottomWidth: 2,
         flexDirection: 'row',
-
-
     },
     team: {
         textAlign: 'center',
@@ -550,22 +571,4 @@ const styles = StyleSheet.create({
         color: "black",
         marginBottom: 10,
     },
-    button: {
-        marginBottom: 10,
-        borderColor: "black",
-        borderWidth: 2,
-        backgroundColor: "#FFDEAD",
-        flexDirection: "row",
-        justifyContent: 'center',
-        width: 130,
-        height: 50,
-        marginLeft: 10,
-        marginRight: 10,
-        paddingTop: 12,
-        textAlign: 'center',
-        borderRadius: 20,
-        fontWeight: 'bold',
-        marginTop: 10,
-    }
-
 });

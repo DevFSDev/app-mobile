@@ -7,6 +7,7 @@ export default function Pantalla9({ navigation }) {
   const { project, setProject } = useContext(PantallasContext);
   const [datesProject, setDatesproject] = useState([]);
 
+  // Hook para llamar a la función leerProyectos cada vez que se muestra la página.
   useEffect(() => {
     leerProyectos();
   }, []);
@@ -14,7 +15,7 @@ export default function Pantalla9({ navigation }) {
 
   let leerProyectos = async () => {
     try {
-      const response = await fetch("http://192.168.55.50:9000/project?id_project=" + project, {
+      const response = await fetch("http://172.20.10.2:9000/project?id_project=" + project, {
         method: "GET"
       });
       if (response.ok) {

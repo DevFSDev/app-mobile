@@ -31,9 +31,9 @@ export default function Pantalla4({ navigation }) {
         if (puntuacionPulsada) {
             let url = "";
             if (skillPulsada === "C++") {
-                url = `http://192.168.55.50:9000/user/skill?nickname=${text}&skill=C%2B%2B&level=${puntuacionPulsada}`;
+                url = `http://172.20.10.2:9000/user/skill?nickname=${text}&skill=C%2B%2B&level=${puntuacionPulsada}`;
             } else {
-                url = `http://192.168.55.50:9000/user/skill?nickname=${text}&skill=${skillPulsada}&level=${puntuacionPulsada}`;
+                url = `http://172.20.10.2:9000/user/skill?nickname=${text}&skill=${skillPulsada}&level=${puntuacionPulsada}`;
             }
             enviarConsultaPost(url);
         }
@@ -42,7 +42,7 @@ export default function Pantalla4({ navigation }) {
     // Función utilizada para leer todas las skills disponibles.
     let leerBDD = async () => {
         try {
-            const response = await fetch("http://192.168.55.50:9000/skill/listall", {
+            const response = await fetch("http://172.20.10.2:9000/skill/listall", {
                 method: "GET"
             });
             if (response.ok) {
@@ -123,7 +123,7 @@ export default function Pantalla4({ navigation }) {
 
         try {
             // Introducimos la url con el nickname recibido de la pantalla1.
-            const response = await fetch("http://192.168.55.50:9000/user/score?nickname=" + text, {
+            const response = await fetch("http://172.20.10.2:9000/user/score?nickname=" + text, {
                 method: "GET"
             });
             if (response.ok) {

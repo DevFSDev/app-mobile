@@ -13,6 +13,9 @@ export default function Pantalla4({ navigation }) {
     const [arrayLevel, setArrayLevel] = useState([]);
     const [indices, setIndices] = useState([]);
 
+    // Funciones utilizadas para que cuando se le pasen la skill y el nivel reconozca los botones que ya han sido pulsados con anterioridad.
+    // Hace que se queden marcados los niveles de cada skill.
+
     const handleSkillLevelChange = (skill, level) => {
         setSkillLevels((prevSkillLevels) => ({
             ...prevSkillLevels,
@@ -53,7 +56,7 @@ export default function Pantalla4({ navigation }) {
     // Función utilizada para saber todas las skills que hay en la base de datos.
     const leerBDD = async () => {
         try {
-            const response = await fetch("http://192.168.55.50:9000/skill/listall", {
+            const response = await fetch("http://172.20.10.2:9000/skill/listall", {
                 method: "GET",
             });
             if (response.ok) {
@@ -84,6 +87,7 @@ export default function Pantalla4({ navigation }) {
         }
     };
 
+    // Función utilizada para que cuando reciba una url lee los arrays de skill y level y se las pasa a la API.
     const enviarConsultaPost = async (url) => {
         const body = {
             skillArray: arraySkill,
@@ -108,9 +112,8 @@ export default function Pantalla4({ navigation }) {
         setArrayLevel((prevArrayLevel) => [...prevArrayLevel, { value: level }]);
     };
 
-    // Función para 
     const guardar = async () => {
-        const url = `http://192.168.55.50:9000/user/skillArray?nickname=${text}`;
+        const url = `http://172.20.10.2v:9000/user/skillArray?nickname=${text}`;
         enviarConsultaPost(url);
     };
 
@@ -119,7 +122,7 @@ export default function Pantalla4({ navigation }) {
     let leerSkills = async () => {
         try {
             // Introducimos la url con el nickname recibido de la pantalla1.
-            const response = await fetch("http://192.168.55.50:9000/user/skill?nickname=" + text, {
+            const response = await fetch("http://172.20.10.2:9000/user/skill?nickname=" + text, {
                 method: "GET"
             });
             if (response.ok) {

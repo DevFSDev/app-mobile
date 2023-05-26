@@ -18,7 +18,7 @@ export default function Pantalla1({ navigation }) {
 
   let leerBDD = async () => {
     try {
-      const response = await fetch("http://192.168.55.50:9000/project/list", {
+      const response = await fetch("http://172.20.10.2:9000/project/list", {
         method: "GET"
       });
       if (response.ok) {

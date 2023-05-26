@@ -21,7 +21,7 @@ export default function Pantalla1({ navigation }) {
   // Función utilizada para leer de la base de datos todos los usuarios e introducirlos en un array con clave/valor.
   let leerBDD = async () => {
     try {
-      const response = await fetch("http://192.168.55.50:9000/user/listUsers", {
+      const response = await fetch("http://172.20.10.2:9000/user/listUsers", {
         method: "GET"
       });
       if (response.ok) {

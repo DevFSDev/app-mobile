@@ -26,7 +26,7 @@ export default function Pantalla8({ navigation }) {
 
   let leerProyectos = async () => {
     try {
-      const response = await fetch("http://192.168.55.50:9000/project?id_project=" + project, {
+      const response = await fetch("http://172.20.10.2:9000/project?id_project=" + project, {
         method: "GET"
       });
       if (response.ok) {
@@ -64,7 +64,7 @@ export default function Pantalla8({ navigation }) {
   let leerCapabilitys = async () => {
     try {
       console.log(project)
-      const response = await fetch("http://192.168.55.50:9000/project/capability?id_project=" + project, {
+      const response = await fetch("http://172.20.10.2:9000/project/capability?id_project=" + project, {
         method: "GET"
       });
       if (response.ok) {

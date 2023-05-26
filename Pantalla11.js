@@ -8,13 +8,15 @@ export default function Pantalla11({ navigation }) {
   const [datesProject, setDatesproject] = useState([]);
   const [datesCapabilitys, setDatescapabilitys] = useState([]);
 
+  // Hook para llamar a la función leerProyectos cada vez que se muestre la página.
   useEffect(() => {
     leerProyectos();
   }, []);
 
+  // Función utilizada para leer aquellos proyectos que tengan ese id_project.
   let leerProyectos = async () => {
     try {
-      const response = await fetch("http://192.168.55.50:9000/project?id_project=" + project, {
+      const response = await fetch("http://172.20.10.2:9000/project?id_project=" + project, {
         method: "GET"
       });
       if (response.ok) {

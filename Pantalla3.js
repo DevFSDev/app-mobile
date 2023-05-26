@@ -32,6 +32,7 @@ export default function Pantalla3({ navigation }) {
     setIsModalVisible(!isModalVisible);
   }
 
+  // Constante para hacer visible el segundo modal.
   const modalActualizar = () => {
     setIsModalVisible2(!isModalVisible2);
   }
@@ -51,7 +52,7 @@ export default function Pantalla3({ navigation }) {
 
     try {
       // Introducimos la url con el nickname recibido de la pantalla1.
-      const response = await fetch("http://192.168.55.50:9000/user/score?nickname=" + text, {
+      const response = await fetch("http://172.20.10.2:9000/user/score?nickname=" + text, {
         method: "GET"
       });
       if (response.ok) {
@@ -70,7 +71,7 @@ export default function Pantalla3({ navigation }) {
     setTimeout(async () => {
       try {
         // Introducimos la url con el nickname recibido de la pantalla1.
-        const response = await fetch("http://192.168.55.50:9000/user/skill?nickname=" + text, {
+        const response = await fetch("http://172.20.10.2:9000/user/skill?nickname=" + text, {
           method: "GET"
         });
         if (response.ok) {
@@ -100,11 +101,11 @@ export default function Pantalla3({ navigation }) {
         let response;
         // Para la skill C++ tenemos que enviarlos con este formato.
         if (skill === "C++") {
-          response = await fetch(`http://192.168.55.50:9000/user/delSkill?nickname=${text}&skill=C%2B%2B`, {
+          response = await fetch(`http://172.20.10.2:9000/user/delSkill?nickname=${text}&skill=C%2B%2B`, {
             method: "DELETE"
           });
         } else {
-          response = await fetch("http://192.168.55.50:9000/user/delSkill?nickname=" + text + "&skill=" + skill, {
+          response = await fetch("http://172.20.10.2:9000/user/delSkill?nickname=" + text + "&skill=" + skill, {
             method: "DELETE"
           });
         }
@@ -125,15 +126,16 @@ export default function Pantalla3({ navigation }) {
     leerBDD();
   };
 
+  // Función utilizada cada vez que se mantiene pulsado sobre uno de los botones.
   let handleTwoPress = async (level, skill, nickname) => {
     try {
       let response;
       if (skill === "C++") {
-        response = await fetch(`http://192.168.55.50:9000/user/skill?nickname=${nickname}&skill=C%2B%2B&level=${level}`, {
+        response = await fetch(`http://172.20.10.2:9000/user/skill?nickname=${nickname}&skill=C%2B%2B&level=${level}`, {
           method: "PUT"
         });
       } else {
-        response = await fetch("http://192.168.55.50:9000/user/skill?nickname=" + nickname + "&skill=" + skill + "&level=" + level, {
+        response = await fetch("http://172.20.10.2:9000/user/skill?nickname=" + nickname + "&skill=" + skill + "&level=" + level, {
           method: "PUT"
         });
       }

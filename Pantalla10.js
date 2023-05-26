@@ -10,6 +10,7 @@ export default function Pantalla10({ navigation }) {
   const [datesProject, setDatesproject] = useState([]);
   const [datesCapabilitys, setDatescapabilitys] = useState([]);
 
+  // Hook para llamar a la funcion leerCapabilitys cada vez que se muetra la página.
   useEffect(() => {
     leerCapabilitys();
   }, []);
@@ -18,7 +19,7 @@ export default function Pantalla10({ navigation }) {
   let leerCapabilitys = async () => {
     try {
       console.log(project)
-      const response = await fetch("http://192.168.55.50:9000/project/capability?id_project=" + project, {
+      const response = await fetch("http://172.20.10.2:9000/project/capability?id_project=" + project, {
         method: "GET"
       });
       if (response.ok) {

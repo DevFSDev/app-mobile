@@ -11,13 +11,13 @@ export default function Pantalla2({ navigation }) {
   const { location, setLocation } = useContext(PantallasContext);
   const { score, setScore } = useContext(PantallasContext);
 
-  // Constante utilizada para abir el navegador cuando pulsemos el e-mail.
+  // Función utilizada para abir el navegador cuando pulsemos el e-mail.
   const handleEmailPress = () => {
     const url = `mailto:${email}`;
     Linking.openURL(url);
   };
 
-
+  // Hook utilizado para leer el score cuando se abre la pantalla.
   useEffect(() => {
     leerScore();
   }, []);
@@ -28,7 +28,7 @@ export default function Pantalla2({ navigation }) {
 
     try {
       // Introducimos la url con el nickname recibido de la pantalla1.
-      const response = await fetch("http://192.168.55.50:9000/user/score?nickname=" + text, {
+      const response = await fetch("http://172.20.10.2:9000/user/score?nickname=" + text, {
         method: "GET"
       });
       if (response.ok) {

@@ -59,7 +59,7 @@ export default function Pantalla5({ navigation }) {
     let leerColores = async () => {
 
         try {
-            const response = await fetch("http://192.168.55.50:9000/department/list", {
+            const response = await fetch("http://172.20.10.2:9000/department/list", {
                 method: "GET"
             });
             if (response.ok) {
@@ -84,7 +84,7 @@ export default function Pantalla5({ navigation }) {
     // Función utilizada para leer todos los departamentos de la base de datos.
     let leerDepartament = async () => {
         try {
-            const response = await fetch("http://192.168.55.50:9000/department/list", {
+            const response = await fetch("http://172.20.10.2:9000/department/list", {
                 method: "GET"
             });
             if (response.ok) {
@@ -107,7 +107,7 @@ export default function Pantalla5({ navigation }) {
     let leerTeams = async () => {
         if (departamento != "") {
             try {
-                const response = await fetch("http://192.168.55.50:9000/team/list/teams?department=" + departamento, {
+                const response = await fetch("http://172.20.10.2:9000/team/list/teams?department=" + departamento, {
                     method: "GET"
                 });
                 if (response.ok) {
@@ -132,7 +132,7 @@ export default function Pantalla5({ navigation }) {
     let leerSkills = async () => {
         if (team != "") {
             try {
-                const response = await fetch("http://192.168.55.50:9000/skill/list?department=" + departamento + "&team=" + team, {
+                const response = await fetch("http://172.20.10.2:9000/skill/list?department=" + departamento + "&team=" + team, {
                     method: "GET"
                 });
                 if (response.ok) {
@@ -159,7 +159,7 @@ export default function Pantalla5({ navigation }) {
     let leerPersonas = async () => {
         if (skill != "") {
             try {
-                const response = await fetch("http://192.168.55.50:9000/user/skill/person?skill=" + skill, {
+                const response = await fetch("http://172.20.10.2:9000/user/skill/person?skill=" + skill, {
                     method: "GET"
                 });
                 if (response.ok) {
@@ -194,7 +194,7 @@ export default function Pantalla5({ navigation }) {
     // Funcion utilizada para saber cuantas personas tienen cada una de las skills, necesita saber a que team hace referencia.
     let personasSkill = async () => {
         try {
-            const response = await fetch("http://192.168.55.50:9000/user/skill/listQuantity?team=" + team, {
+            const response = await fetch("http://172.20.10.2:9000/user/skill/listQuantity?team=" + team, {
                 method: "GET"
             });
             if (response.ok) {
@@ -213,7 +213,7 @@ export default function Pantalla5({ navigation }) {
     let personasTeams = async () => {
         if (departamento != "") {
             try {
-                const response = await fetch("http://192.168.55.50:9000/team/listQuantity?department=" + departamento, {
+                const response = await fetch("http://172.20.10.2:9000/team/listQuantity?department=" + departamento, {
                     method: "GET"
                 });
                 if (response.ok) {
@@ -238,7 +238,7 @@ export default function Pantalla5({ navigation }) {
                 [{ "name": "Desarrollo" }, { "name": "Sistemas" }, { "name": "Operaciones" }, { "name": "Calidad" }, { "name": "Diseño" }, { "name": "Comunicación" }, { "name": "CAU" }]
                 ;
 
-            const response = await fetch("http://192.168.55.50:9000/department/listQuantity", {
+            const response = await fetch("http://172.20.10.2:9000/department/listQuantity", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
